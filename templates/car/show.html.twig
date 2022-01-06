@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Car Website = {{car}}{% endblock %}
+
+{% block body %}
+    <h2> {{car}} Car</h2>
+
+    {% if descriptions|length>0 %}
+        <div> Il y a {{ descriptions|length }} descriptions. </div>
+        {% for description in descriptions %}
+            {% if car.photoPath %} 
+                <img src="{{ asset('images/' ~car.photoPath)}}" />
+            {% endif %}
+
+        <h4> {{ description.author }} </h4>
+        <p>
+            {{ description.text }}
+        </p>
+        {% endfor %}
+        {% if previous >= 0 %}
+            <a href="{{ path('car', {id:car.id, offset:previous}) }}"> Previous </a>
+        {% endif %}
+        {% if next < descriptions|length %}
+            <a href="{{ path('car', {id:car.id, offset:next}) }}"> Next </a>
+        {% endif %}
+    {% else %}
+        <div> Pas de commentaire publié sur cette conference </div>
+    {% endif %}
+{% endblock %}
